@@ -86,7 +86,7 @@ const ChatListComponent = ({ chat }: any) => {
             source={
               receiver.profileImage
                 ? {
-                    uri: `http://192.168.220.3:5000/public/${receiver.profileImage}`,
+                    uri: `https://chattr-tyk4.onrender.com/public/${receiver.profileImage}`,
                   }
                 : Images.defaultDp
             }

@@ -41,7 +41,7 @@ const EditProfileComponent: React.FC<EditProfileModalProps> = ({
   const [name, setName] = useState(`${userInfo.name}`);
   const [profileImage, setProfileImage] = useState<string | null>(
     userInfo.profileImage
-      ? `http://192.168.220.3:5000/public/${userInfo.profileImage}`
+      ? `https://chattr-tyk4.onrender.com/public/${userInfo.profileImage}`
       : null,
   );
 
