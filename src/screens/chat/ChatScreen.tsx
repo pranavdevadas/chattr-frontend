@@ -525,7 +525,7 @@ export default function ChatScreen() {
             source={
               receiver.profileImage
                 ? {
-                    uri: `https://chattr-tyk4.onrender.com/public/${receiver.profileImage}`,
+                    uri: `https://chattr-b.up.railway.app/public/${receiver.profileImage}`,
                   }
                 : Images.defaultDp
             }

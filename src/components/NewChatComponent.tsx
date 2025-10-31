@@ -147,7 +147,7 @@ const NewChatComponent: React.FC<NewChatModalProps> = ({
                       <View className="w-10 h-10 rounded-full items-center justify-center mr-3 overflow-hidden">
                         <Image
                           source={{
-                            uri: `https://chattr-tyk4.onrender.com/public/${item.profileImage}`,
+                            uri: `https://chattr-b.up.railway.app/public/${item.profileImage}`,
                           }}
                           className="w-10 h-10 rounded-full"
                           resizeMode="cover"

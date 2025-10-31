@@ -1,7 +1,7 @@
 import { io, Socket } from 'socket.io-client';
 
 export let socket: Socket | null = null;
-const BASE_URL = 'http://192.168.220.3:5000';
+const BASE_URL = 'https://chattr-b.up.railway.app';
 
 
 // Connect the socket

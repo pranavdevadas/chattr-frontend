@@ -37,7 +37,7 @@ const MessageBubbleComponent: React.FC<MessageBubbleProps> = ({
   const [thumbnail, setThumbnail] = useState<string | null>(null);
   const [loadingThumb, setLoadingThumb] = useState(false);
 
-  const BASE_URL = 'https://chattr-tyk4.onrender.com/';
+  const BASE_URL = 'https://chattr-b.up.railway.app/';
   const isImage = /\.(jpg|jpeg|png|gif|webp|bmp)$/i.test(msg.text);
   const isVideo = /\.(mp4|mov|avi|mkv|webm|3gp|m4v)$/i.test(msg.text);
   const isMedia = isImage || isVideo;

@@ -41,7 +41,7 @@ const EditProfileComponent: React.FC<EditProfileModalProps> = ({
   const [name, setName] = useState(`${userInfo.name}`);
   const [profileImage, setProfileImage] = useState<string | null>(
     userInfo.profileImage
-      ? `https://chattr-tyk4.onrender.com/public/${userInfo.profileImage}`
+      ? `https://chattr-b.up.railway.app/public/${userInfo.profileImage}`
       : null,
   );
 
@@ -73,14 +73,6 @@ const EditProfileComponent: React.FC<EditProfileModalProps> = ({
     setUsernameError(usernameErrorMsg);
     if (nameErrorMsg || usernameErrorMsg) {
       showToast({ type: 'danger', message: 'Please fix validation errors' });
-      return;
-    }
-    if (
-      name === userInfo.name &&
-      username === userInfo.userName &&
-      profileImage?.includes(userInfo.profileImage || '')
-    ) {
-      showToast({ type: 'danger', message: 'Nothing to update' });
       return;
     }
 
