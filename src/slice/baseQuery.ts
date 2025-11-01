@@ -1,7 +1,7 @@
 import { fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: "https://chattr-b.up.railway.app",
+  baseUrl: "https://ocrsystem.site",
   credentials: "include",
 });
 

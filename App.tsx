@@ -13,6 +13,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { View, ViewStyle } from 'react-native';
 import Loader from './src/components/Loader';
 import { connectSocket, setUserOnline } from './src/utils/socket';
+import { requestUserPermission } from './src/utils/firebase';
 
 enableScreens();
 
@@ -52,6 +53,10 @@ const LoadUserData = () => {
     }
   }, [userInfo]);
 
+  useEffect(() => {
+    requestUserPermission();
+  }, []);
+
   return (
     <View className="flex-1">
       <ToastProvider>
@@ -67,7 +72,9 @@ export default function App() {
   return (
     <Provider store={store}>
       <SafeAreaProvider>
-        <SafeAreaView style={{ flex: 1, backgroundColor: 'black' } as ViewStyle}>
+        <SafeAreaView
+          style={{ flex: 1, backgroundColor: 'black' } as ViewStyle}
+        >
           <NavigationContainer>
             <LoadUserData />
           </NavigationContainer>

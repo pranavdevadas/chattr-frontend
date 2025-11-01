@@ -86,7 +86,7 @@ const ChatListComponent = ({ chat }: any) => {
             source={
               receiver.profileImage
                 ? {
-                    uri: `https://chattr-b.up.railway.app/public/${receiver.profileImage}`,
+                    uri: `https://ocrsystem.site/public/${receiver.profileImage}`,
                   }
                 : Images.defaultDp
             }

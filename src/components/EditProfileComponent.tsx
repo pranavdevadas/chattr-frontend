@@ -41,7 +41,7 @@ const EditProfileComponent: React.FC<EditProfileModalProps> = ({
   const [name, setName] = useState(`${userInfo.name}`);
   const [profileImage, setProfileImage] = useState<string | null>(
     userInfo.profileImage
-      ? `https://chattr-b.up.railway.app/public/${userInfo.profileImage}`
+      ? `https://ocrsystem.site/public/${userInfo.profileImage}`
       : null,
   );
 

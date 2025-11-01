@@ -180,8 +180,8 @@ export default function ChatScreen() {
       }
 
       const fileSize = asset.fileSize || 0;
-      const MAX_IMAGE_SIZE = 5 * 1024 * 1024; 
-      const MAX_VIDEO_SIZE = 30 * 1024 * 1024; 
+      const MAX_IMAGE_SIZE = 5 * 1024 * 1024;
+      const MAX_VIDEO_SIZE = 30 * 1024 * 1024;
 
       if (mediaType === 'image' && fileSize > MAX_IMAGE_SIZE) {
         setShowLoader(false);
@@ -525,7 +525,7 @@ export default function ChatScreen() {
             source={
               receiver.profileImage
                 ? {
-                    uri: `https://chattr-b.up.railway.app/public/${receiver.profileImage}`,
+                    uri: `https://ocrsystem.site/public/${receiver.profileImage}`,
                   }
                 : Images.defaultDp
             }
