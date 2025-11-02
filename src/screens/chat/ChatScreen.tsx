@@ -44,6 +44,7 @@ import {
 import {
   useGetMessagesQuery,
   useSendMediaMessageMutation,
+  useSendNotificationMutation,
 } from '../../slice/userApiSlice';
 import { useFocusEffect } from '@react-navigation/native';
 import { updateChat } from '../../slice/chatSlice';
@@ -95,6 +96,7 @@ export default function ChatScreen() {
   } = useGetMessagesQuery(chat._id);
   const [sendMedia, { isLoading: sendMediaLoading, isError }] =
     useSendMediaMessageMutation();
+  const [sendNotification] = useSendNotificationMutation();
 
   // Show loader
   useEffect(() => {
@@ -409,7 +411,7 @@ export default function ChatScreen() {
   );
 
   // Handle sending messages
-  const handleSend = () => {
+  const handleSend = async () => {
     if (message.trim()) {
       const tempMessageId = `temp-${Date.now()}`;
 
@@ -428,6 +430,15 @@ export default function ChatScreen() {
       setMessages(prev => [...prev, newMessage]);
       setMessage('');
       sendMessage(chat._id, userInfo._id, message.trim(), tempMessageId);
+      try {
+        await sendNotification({
+          receiverId: receiver._id,
+          title: userInfo.name,
+          body: message.trim(),
+        }).unwrap();
+      } catch (err) {
+        console.error('Notification error:', err);
+      }
       setTimeout(() => {
         scrollViewRef.current?.scrollToEnd({ animated: true });
         animateMessageIn(tempMessageId);

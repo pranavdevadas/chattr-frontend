@@ -21,6 +21,7 @@ import {
   useVerifyOtpMutation,
   useLoginMutation,
   useResendOtpMutation,
+  useSaveFcmTokenMutation,
 } from '../../slice/userApiSlice';
 import { showToast } from 'react-native-dan-forden';
 import { useDispatch } from 'react-redux';
@@ -28,6 +29,7 @@ import { setCredentials } from '../../slice/userAuthSlice';
 import validation from '../../InputValidation';
 import Loader from '../../components/Loader';
 import { connectSocket } from '../../utils/socket';
+import { getFcmToken, requestUserPermission } from '../../utils/firebase';
 
 const LoginScreen = () => {
   const dispatch = useDispatch();
@@ -46,6 +48,8 @@ const LoginScreen = () => {
   const [verifiyOtp, { isLoading: otpLoading }] = useVerifyOtpMutation();
   const [login, { isLoading: loginLoading }] = useLoginMutation();
   const [resendOtp, { isLoading: resendOtpLoading }] = useResendOtpMutation();
+  const [saveFcmToken, { isLoading: saveFcmTokenLoading }] =
+    useSaveFcmTokenMutation();
 
   // Validation states
   const [nameError, setNameError] = useState('');
@@ -124,6 +128,14 @@ const LoginScreen = () => {
       });
       dispatch(setCredentials(response.user));
       connectSocket();
+      await requestUserPermission();
+      let token = getFcmToken();
+      console.log('FCM Token:', token);
+      if (!token) {
+        console.log('No token received');
+        return;
+      }
+      await saveFcmToken({ fcmToken: token }).unwrap();
     } catch (err: any) {
       console.log('Verification Error:', err);
       showToast({
@@ -418,7 +430,13 @@ const LoginScreen = () => {
         </View>
       </ScrollView>
       <Loader
-        visible={isLoading || otpLoading || loginLoading || resendOtpLoading}
+        visible={
+          isLoading ||
+          otpLoading ||
+          loginLoading ||
+          resendOtpLoading ||
+          saveFcmTokenLoading
+        }
       />
     </KeyboardAvoidingView>
   );

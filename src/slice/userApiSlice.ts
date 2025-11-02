@@ -86,6 +86,20 @@ export const userApiSlice = apiSlice.injectEndpoints({
         body: query,
       }),
     }),
+    saveFcmToken: builder.mutation({
+      query: query => ({
+        url: `${USER_URL}/save-fcm-token`,
+        method: 'POST',
+        body: query,
+      }),
+    }),
+    sendNotification: builder.mutation({
+      query: query => ({
+        url: `${USER_URL}/send-notificaton`,
+        method: 'POST',
+        body: query,
+      }),
+    }),
   }),
 });
 
@@ -101,5 +115,7 @@ export const {
   useSendMessageMutation,
   useGetMessagesQuery,
   useGetUserChatsQuery,
-  useSendMediaMessageMutation
+  useSendMediaMessageMutation,
+  useSaveFcmTokenMutation,
+  useSendNotificationMutation
 } = userApiSlice;
