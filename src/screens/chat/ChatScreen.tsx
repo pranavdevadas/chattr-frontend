@@ -50,8 +50,8 @@ import { useFocusEffect } from '@react-navigation/native';
 import { updateChat } from '../../slice/chatSlice';
 import moment from 'moment';
 import { launchImageLibrary, launchCamera } from 'react-native-image-picker';
-import Video from 'react-native-video';
-import { BlurView } from '@react-native-community/blur';
+// import Video from 'react-native-video';
+// import { BlurView } from '@react-native-community/blur';
 import { showToast } from 'react-native-dan-forden';
 
 type Participant = {
@@ -145,12 +145,14 @@ export default function ChatScreen() {
               mediaType: 'mixed',
               quality: 0.8,
               includeExtra: true,
+              durationLimit: 30,
             })
           : await launchImageLibrary({
               mediaType: 'mixed',
               selectionLimit: 1,
               quality: 0.8,
               includeExtra: true,
+              videoQuality: 'low',
             });
 
       if (result.didCancel) {
@@ -262,6 +264,23 @@ export default function ChatScreen() {
       };
 
       setMessages(prev => [...prev, newMessage]);
+      try {
+        let notificationBody = '';
+        if (selectedMediaType === 'image') {
+          notificationBody = '📷 Photo';
+        } else if (selectedMediaType === 'video') {
+          notificationBody = '🎥 Video';
+        } else {
+          notificationBody = '📎 Media';
+        }
+        await sendNotification({
+          receiverId: receiver._id,
+          title: userInfo.name,
+          body: notificationBody,
+        }).unwrap();
+      } catch (err) {
+        console.error('Notification error:', err);
+      }
 
       setTimeout(() => {
         scrollViewRef.current?.scrollToEnd({ animated: true });
@@ -675,7 +694,7 @@ export default function ChatScreen() {
           onRequestClose={() => setPreviewVisible(false)}
         >
           <View className="flex-1 justify-center items-center px-3">
-            <BlurView
+            {/* <BlurView
               style={
                 {
                   position: 'absolute',
@@ -687,16 +706,16 @@ export default function ChatScreen() {
               }
               blurType="light"
               blurAmount={10}
-            />
+            /> */}
 
             {/* Clean Modal Card */}
             <View className="bg-white rounded-2xl w-full max-w-sm p-5 shadow-lg">
               <Text className="text-center text-lg font-semibold mb-4">
-                Preview
+                Confirm to Send ?
               </Text>
 
               {/* Media */}
-              <View className="rounded-lg mb-2 overflow-hidden">
+              {/* <View className="rounded-lg mb-2 overflow-hidden">
                 {selectedMediaType === 'image' ? (
                   <Image
                     source={{ uri: selectedMedia?.uri }}
@@ -712,7 +731,7 @@ export default function ChatScreen() {
                     resizeMode="cover"
                   />
                 )}
-              </View>
+              </View> */}
 
               {/* Buttons */}
               <View className="flex-row space-x-3">

@@ -11,7 +11,7 @@ import {
 import Images from '../../utils/images';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import InputTextComponent from '../../components/InputTextComponent';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import ButtonComponent from '../../components/ButtonComponent';
@@ -39,6 +39,8 @@ const LoginScreen = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [otp, setOtp] = useState('');
+  const [isDisabled, setIsDisabled] = useState(false);
+  const [timer, setTimer] = useState(0);
   const [prevSelected, setPrevSelected] = useState<'register' | 'login'>(
     'register',
   );
@@ -182,6 +184,9 @@ const LoginScreen = () => {
       return;
     }
 
+    setIsDisabled(true);
+    setTimer(30);
+
     try {
       const result = await resendOtp({ email }).unwrap();
       showToast({
@@ -216,6 +221,16 @@ const LoginScreen = () => {
       setOtpError(validation.validateOtp(text));
     }
   };
+
+  // Timer for resend
+  useEffect(() => {
+    if (timer > 0) {
+      const interval = setInterval(() => setTimer((t) => t - 1), 1000);
+      return () => clearInterval(interval);
+    } else {
+      setIsDisabled(false);
+    }
+  }, [timer]);
 
   return (
     <KeyboardAvoidingView
@@ -418,9 +433,16 @@ const LoginScreen = () => {
                   <Text className="font-sora text-base">
                     Didn't get the OTP?
                   </Text>
-                  <Pressable onPress={handleResendOtp}>
-                    <Text className="font-sora font-soraBold text-primarydark ml-1 text-lg">
-                      Resend OTP
+                  <Pressable
+                    onPress={!isDisabled ? handleResendOtp : undefined}
+                    disabled={isDisabled}
+                  >
+                    <Text
+                      className={`font-sora font-soraBold ml-1 text-lg ${
+                        isDisabled ? 'text-gray-400' : 'text-primarydark'
+                      }`}
+                    >
+                      {isDisabled ? `Resend OTP in ${timer}s` : 'Resend OTP'}
                     </Text>
                   </Pressable>
                 </>

@@ -1,8 +1,8 @@
 import { fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 const baseQuery = fetchBaseQuery({
-  //baseUrl: "https://ocrsystem.site",
-  baseUrl: "http://192.168.220.3:5000",
+  // baseUrl: "http://192.168.220.3:5000",
+  baseUrl: "https://ocrsystem.site",
   credentials: "include",
 });
 
